@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas Animation</title>
+</head>
+<body>
+
+  <h2>Canvas Animation: Moving Rectangle & Pulsing Circle</h2>
+  <canvas id="myCanvas" width="500" height="300" style="border:1px solid #000;"></canvas>
+
+  <script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Rectangle variables
+    let rectX = 0;
+    const rectY = 50;
+    const rectWidth = 100;
+    const rectHeight = 60;
+    const rectSpeed = 2;
+
+    // Circle variables
+    const circleX = 350;
+    const circleY = 200;
+    let radius = 30;
+    let growing = true;
+
+    function animate() {
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Move rectangle
+      ctx.fillStyle = 'skyblue';
+      ctx.strokeStyle = 'blue';
+      ctx.lineWidth = 3;
+      ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+      ctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
+      rectX += rectSpeed;
+      if (rectX > canvas.width) rectX = -rectWidth;
+
+      // Animate circle radius
+      ctx.beginPath();
+      ctx.arc(circleX, circleY, radius, 0, 2 * Math.PI);
+      ctx.fillStyle = 'lightgreen';
+      ctx.fill();
+      ctx.strokeStyle = 'green';
+      ctx.stroke();
+
+      // Change radius
+      if (growing) {
+        radius += 0.5;
+        if (radius >= 50) growing = false;
+      } else {
+        radius -= 0.5;
+        if (radius <= 30) growing = true;
+      }
+
+      // Request next frame
+      requestAnimationFrame(animate);
+    }
+
+    animate(); // Start animation
+  </script>
+
+</body>
+</html>
